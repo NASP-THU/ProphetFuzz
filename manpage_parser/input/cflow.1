@@ -1,0 +1,286 @@
+.\" This file is part of Cflow -*- nroff -*-
+.\" Copyright (C) 2014-2019 Sergey Poznyakoff
+.\"
+.\" Cflow is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 3, or (at your option)
+.\" any later version.
+.\"
+.\" Cflow is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with Cflow.  If not, see <http://www.gnu.org/licenses/>.
+.TH CFLOW 1 "February 10, 2019" "CFLOW"
+.SH NAME
+cflow \- generate a C-language flowgraph
+.SH SYNOPSIS
+.nh
+.na
+\fBcflow\fB [\fB\-ASTrxablnv\fR] [\fB\-d\fR \fINUMBER\fR]\
+ [\fB\-f\fR \fINAME\fR] [\fB\-i\fR \fICLASSES\fR] [\fB\-o\fR \fIFILE\fR]\
+ [\fB\-D\fR \fINAME\fR[\fB=\fIDEFN\fR]] [\fB\-I\fR \fIDIR\fR]\
+ [\fB\-m\fR \fINAME\fR] [\fB\-p\fR \fINUMBER\fR]\
+ [\fB\-s\fR \fISYMBOL\fB:\fR[\fB=\fR]\fITYPE\fR] [\fB\-U\fR \fINAME\fR]\
+ [\fB\-\-all\fR] [\fB\-\-depth=\fINUMBER\fR] [\fB\-\-format=\fINAME\fR]\
+ [\fB\-\-include=\fICLASSES\fR] [\fB\-\-output=\fIFILE\fR]\
+ [\fB\-\-reverse\fR] [\fB\-\-xref\fR] [\fB\-\-ansi\fR]\
+ [\fB\-\-define=\fINAME\fR[\fB=DEFN\fR]]\
+ [\fB\-\-include\-dir=\fIDIR\fR] [\fB\-\-main=\fINAME\fR] [\fB\-\-no\-main\fR]\
+ [\fB\-\-pushdown=\fINUMBER\fR] [\fB\-\-preprocess\fR[\fB=\fICOMMAND\fR]]\
+ [\fB\-\-cpp\fR[\fB=\fICOMMAND\fR]]\
+ [\fB\-\-symbol=\fISYMBOL\fB:\fR[\fB=\fR]\fITYPE\fR]\
+ [\fB\-\-use\-indentation\fR] [\fB\-\-undefine=\fINAME\fR]\
+ [\fB\-\-brief\fR] [\fB\-\-emacs\fR] [\fB\-\-print\-level\fR]\
+ [\fB\-\-level\-indent=\fIELEMENT\fR]\
+ [\fB\-\-number\fR] [\fB\-\-omit\-arguments\fR]\
+ [\fB\-\-omit\-symbol\-names\fR] [\fB\-\-tree\fR]\
+ [\fB\-\-debug\fR[\fB=\fINUMBER\fR]] [\fB\-\-verbose\fR] \fBFILE\fR...
+.PP
+\fBcflow\fR [\fB\-?V\fR] [\fB\-\-help\fR] [\fB\-\-usage\fR] [\fB\-\-version\fR]
+.ad
+.hy
+.SH NOTE
+This manpage is a short description of GNU \fBcflow\fR.  For a detailed
+discussion, including examples and usage recommendations, refer to the
+\fBGNU Cflow Manual\fR available in texinfo format.  If the \fBinfo\fR
+reader and the cflow documentation are properly installed on your
+system, the command
+.PP
+.RS +4
+.B info cflow
+.RE
+.PP
+should give you access to the complete manual.
+.PP
+You can also view the manual using the info mode in
+.BR emacs (1),
+or find it in various formats online at
+.PP
+.RS +4
+.B http://www.gnu.org/software/cflow/manual
+.RE
+.PP
+If any discrepancies occur between this manpage and the
+\fBGNU Cflow Manual\fR, the later shall be considered the authoritative
+source.
+.SH DESCRIPTION
+.B Cflow
+analyzes a collection of input files written in \fBC\fR programming
+language and writes to standard output a graph charting dependencies
+between various functions.
+.SH OPTIONS
+.SS General-purpose options
+.TP
+\fB\-d\fR, \fB\-\-depth=\fINUMBER\fR
+Set the depth at which the flowgraph is cut off.  By default the depth
+is not limited.
+.TP
+\fB\-\-debug\fR[\fB=\fINUMBER\fR]
+Set debugging level.
+.TP
+\fB\-f\fR, \fB\-\-format=\fINAME\fR
+Use given output format \fINAME\fR. Valid names are \fBgnu\fR (the
+default) and \fBposix\fR.
+.TP
+\fB\-i\fR, \fB\-\-include=\fICLASSES\fR
+Include specified classes of symbols.  The
+.BR ^ or -
+symbol excludes the classes that follow it.  Valid classes are:
+.RS
+.TP
+.BR _  (underscore)
+Symbols whose names begin with an underscore.
+.TP
+.B s
+Static symbols
+.TP
+.B t
+Typedefs (for cross-references only).
+.TP
+.B x
+All data symbols, both external and static
+.RE
+.TP
+\fB\-o\fR, \fB\-\-output=\fIFILE\fR
+Set output file name (default is \fB\-\fR, meaning stdout).
+.TP
+\fB\-r\fR, \fB\-\-reverse\fR
+Print reverse call tree.
+.TP
+\fB\-\-no\-reverse\fR
+Disable the effect of the previous \fB\-\-reverse\fR option.
+.TP
+\fB\-x\fR, \fB\-\-xref\fR
+Produce cross-reference listing only.
+.TP
+\fB\-v\fR, \fB\-\-verbose\fR
+Enable verbose error diagnostics.
+.SS Parser control
+.TP
+\fB\-a\fR, \fB\-\-ansi\fR
+Accept only sources in ANSI C.
+.TP
+\fB\-\-no\-ansi\fR
+Don't assume input files are written in ANSI C.
+.TP
+\fB\-D\fR, \fB\-\-define=\fINAME\fR[\fB=\fIDEFN\fR]
+Predefine \fINAME\fR as a macro.
+.TP
+\fB\-I\fR, \fB\-\-include\-dir=\fIDIR\fR
+Add the directory \fIDIR\fR to the list of directories to be searched
+for header files.
+.TP
+\fB\-m\fR, \fB\-\-main=\fINAME\fR
+Assume main function is \fINAME\fR
+.TP
+\fB\-\-no\-main\fR
+Assume there's no main function in the program.  This option has the
+same effect as \fB\-\-all\fR, except that, if the program do define
+the \fBmain\fR function, it will be treated as any other functions,
+i.e. it will not be placed at the top of output, but in its
+place as per the lexicographic ordering of function names.  See also the
+description of \fB\-\-all\fR.
+.TP
+\fB\-p\fR, \fB\-\-pushdown=\fINUMBER\fR
+Set initial token stack size to \fINUMBER\fR.
+.TP
+\fB\-\-preprocess\fR[\fB=\fICOMMAND\fR], \fB\-\-cpp\fR[\fB=\fICOMMAND\fR]
+Run the specified preprocessor command.
+.TP
+\fB\-\-no\-preprocess\fR, \fB\-\-no\-cpp\fR
+Disable preprocessing.
+.TP
+\fB\-s\fR, \fB\-\-symbol=\fISYMBOL\fB:\fR[\fB=\fR]\fITYPE\fR
+Register \fISYMBOL\fR with given \fITYPE\fR, or define an alias (if
+\fB:=\fR is used). Valid types are:
+.BR keyword (or kw ), 
+.BR modifier ,
+.BR qualifier ,
+.BR identifier ,
+.BR type ,
+and
+.BR wrapper .
+Any unambiguous abbreviation of the above is also accepted.
+.TP
+\fB\-S\fR, \fB\-\-use\-indentation\fR
+Rely on indentation to solve suspicious constructs.
+.TP
+\fB\-\-no\-use\-indentation\fR
+Don't use indentation in parsing (default).
+.TP
+\fB\-U\fR, \fB\-\-undefine=\fINAME\fR
+Cancel any previous definition of \fINAME\fR.
+.SS Output control
+.TP
+\fB\-A\fR, \fB\-\-all\fR
+Produce graphs for all global functions in the program.  Use this
+option if your program contains functions which are not directly
+reachable from \fBmain()\fR.
+.sp
+The output consist of separate flow graphs for each top-level function
+defined in the program.  These graphs will be placed after the graph
+for \fBmain()\fR (if it exists), and will be ordered lexicographically by
+the function name.
+.sp
+If used twice, graphs for all global functions (whether top-level or
+not) will be displayed.
+.TP
+\fB\-b\fR, \fB\-\-brief\fR
+Brief output.
+.TP
+\fB\-\-no\-brief\fR
+Disable brief output.
+.TP
+\fB\-\-emacs\fR
+Format output for use with GNU Emacs.
+.TP
+\fB\-\-no\-emacs\fR
+Disable the effect of the previous \fB\-\-emacs\fR option.
+.TP
+\fB\-l\fR, \fB\-\-print\-level\fR
+Print nesting level along with the call tree.
+.TP
+\fB\-\-no\-print\-level\fR
+Don't print nesting level.
+.TP
+\fB\-\-level\-indent=\fIELEMENT\fR
+Control graph appearance.
+.TP
+\fB\-n\fR, \fB\-\-number\fR
+Print line numbers.
+.TP
+\fB\-\-no\-number\fR
+Don't print line numbers.
+.TP
+\fB\-\-omit\-arguments\fR
+Do not print argument lists in function declarations.
+.TP
+\fB\-\-no\-omit\-arguments\fR
+Print argument lists in function declarations (the default).
+.TP
+\fB\-\-omit\-symbol\-names\fR
+Do not print symbol names in declaration strings.
+.TP
+\fB\-\-no\-omit\-symbol\-names\fR
+Print symbol names in declaration strings (the default).
+.TP
+\fB\-T\fR, \fB\-\-tree\fR
+Draw ASCII art tree.
+.TP
+\fB\-\-no\-tree\fR
+Disable tree output.
+.SS Informational options
+These options instruct the program to output the requested piece of
+information and exit.
+.TP
+\fB\-?\fR, \fB\-\-help\fR
+Print a short help summary.
+.TP
+\fB\-\-usage\fR
+Print a summary of available options.
+.TP
+\fB\-V\fR, \fB\-\-version\fR
+Print program version.
+.SH "RETURN VALUE"
+.TP
+.B 0
+Successful completion.
+.TP
+.B 1
+Fatal error occurred.
+.TP
+.B 2
+Some input files cannot be read or parsed.
+.TP
+.B 3
+Command line usage error.
+.SH "SEE ALSO"
+Online copies of \fBGNU cflow\fR documentation in various formats can be
+found at:
+.PP
+.in +4
+.B http://www.gnu.org/software/cflow/manual
+.SH AUTHORS
+Sergey Poznyakoff
+.SH "BUG REPORTS"
+Report bugs to <bug\-cflow@gnu.org>.
+.SH COPYRIGHT
+Copyright \(co 2014-2019 Sergey Poznyakoff
+.br
+.na
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+.br
+.ad
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.\" Local variables:
+.\" eval: (add-hook 'write-file-hooks 'time-stamp)
+.\" time-stamp-start: ".TH [A-Z_][A-Z0-9_.\\-]* [0-9] \""
+.\" time-stamp-format: "%:B %:d, %:y"
+.\" time-stamp-end: "\""
+.\" time-stamp-line-limit: 20
+.\" end:
+

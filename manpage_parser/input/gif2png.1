@@ -1,0 +1,164 @@
+'\" t
+.\"     Title: gif2png
+.\"    Author: [see the "AUTHORS" section]
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\"      Date: 03/08/2012
+.\"    Manual: Graphics
+.\"    Source: gif2png
+.\"  Language: English
+.\"
+.TH "GIF2PNG" "1" "03/08/2012" "gif2png" "Graphics"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+gif2png \- convert GIFs to PNGs
+.SH "SYNOPSIS"
+.HP \w'\fBgif2png\fR\ 'u
+\fBgif2png\fR [\-bdfghinprsvwO] [\fIfile\&.[gif]\fR...]
+.SH "DESCRIPTION"
+.PP
+The
+\fBgif2png\fR
+program converts files in the obsolescent Graphic Interchange Format (GIF) to Portable Network Graphics (PNG) format, an open W3C standard\&.
+.PP
+Normally
+\fBgif2png\fR
+converts each file named on the command line, leaving the original in place\&. If a name does not have a \&.gif extension, the unmodified name will be tried first, followed by the name with \&.gif appended\&. For each file named
+foo\&.gif, a foo\&.png will be created\&.
+.PP
+When a multi\-image GIF file named
+foo\&.gif
+is converted, gif2png creates multiple PNG files, each containing one frame; their names will be
+foo\&.png,
+foo\&.p01,
+foo\&.p02
+etc\&.
+.PP
+If no source files are specified and stdin is a terminal,
+\fBgif2png\fR
+lists a usage summary and version information, then exits\&.
+.PP
+If no source files are specified, and stdin is a device or pipe, stdin is converted to
+noname\&.png\&. (The program can\*(Aqt be a normal stdin\-to\-stdout filter because of the possibility that the input GIF might have multiple images)\&.
+.PP
+However, if filter mode is forced (with \-f) stdin will be converted to stdout, with
+\fBgif2png\fR
+returning an error code if the GIF is multi\-image\&.
+.PP
+The program will preserve the information contained in a GIF file as closely as possible, including GIF comment and application\-data extension blocks\&. All graphics data (pixels, RGB color tables) will be converted without loss of information\&. Transparency is also preserved\&. There is one exception; GIF plain\-text extensions are skipped\&.
+.PP
+The program automatically converts interlaced GIFs to interlaced PNGs\&. It detects images in which all colors are gray (equal R, G, and B values) and converts such images to PNG grayscale\&. Other images are converted to use the PNG palette type\&. Duplicate color entries are silently preserved\&. Unused color\-table entries cause an error message\&.
+.SH OPTIONS
+.PP
+The action of the program can be modified with the following command\-line switches:
+.PP
+\fB\-b\fR {#}RRGGBB
+.RS 4
+Background\&. Replace transparent pixels with given RGB value, six hexadecimal digits interpreted as two hexits each of red, green, and blue value\&. The value may optionally be led with a #, HTML\-style\&.
+.RE
+.PP
+\fB\-d \fR
+.RS 4
+Delete source GIF files after successful conversion\&.
+.RE
+.PP
+\fB\-f \fR
+.RS 4
+Filter mode\&. Convert GIF on stdin to PNG on stdout, return error if the GIF is multi\-image\&.
+.RE
+.PP
+\fB\-m \fR
+.RS 4
+Preserve file modification time\&. the PNG output gets the mod time of the input file, not the time it was converted\&.
+.RE
+.PP
+\fB\-g \fR
+.RS 4
+Write gamma=1/2\&.2 and sRGB chunks in the PNG\&.
+.RE
+.PP
+\fB\-h \fR
+.RS 4
+Generate PNG color\-frequency histogram chunks into converted color files\&.
+.RE
+.PP
+\fB\-i \fR
+.RS 4
+Force conversion to interlaced PNG files\&.
+.RE
+.PP
+\fB\-n \fR
+.RS 4
+Force conversion to non\-interlaced PNG files\&.
+.RE
+.PP
+\fB\-p \fR
+.RS 4
+Display progress of PNG writing\&.
+.RE
+.PP
+\fB\-r \fR
+.RS 4
+Try to recover data from corrupted GIF files\&.
+.RE
+.PP
+\fB\-s \fR
+.RS 4
+Do not translate the GIF Software chunk to a PNG annotation\&.
+.RE
+.PP
+\fB\-v \fR
+.RS 4
+Verbose mode; show summary line, \-vv enables conversion\-statistics and debugging messages\&.
+.RE
+.PP
+\fB\-w \fR
+.RS 4
+Web\-probe switch; list GIFs that do not have multiple images to stdout\&. GIFs that fail this filter cause error messages to stderr\&.
+.RE
+.PP
+\fB \-O \fR
+.RS 4
+Optimize; remove unused color\-table entries\&. Normally these trigger an error message and disable
+\fB\-d\fR
+(but conversion is completed anyway)\&. Also, use zlib compression level 9 (best compression) instead of the default level\&. The recovery algorithm enabled by
+\fB\-r\fR
+is as follows: Unused color table entries will not trigger an error message as they normally do, but will still be preserved unless
+\fB\-O\fR
+is also on, in which case they will be discarded\&. Missing color tables will be patched with a default that puts black at index 0, white at index 1, and supplies red, green, blue, yellow, purple and cyan as the remaining color values\&. Missing image pixels will be set to 0\&. Unrecognized or corrupted extensions will be discarded\&.
+.RE
+.SH "PROBLEMS"
+.PP
+Naively converting all your GIFs at one go with
+\fBgif2png\fR
+is not likely to give you the results you want\&. Animated GIFs cannot be translated to PNG, which is a single\-image format\&.
+.PP
+The web\-probe switch is intended to be used with scripts for converting web sites\&. In versions of this tool up to 2\&.5\&.2 it filtered out GIFs with transparency as well as GIFs with animations, but support for PNG transparency has been universal in browsers since about 2006\&.
+.SH "STANDARDS AND SPECIFICATIONS"
+.PP
+Copies of the GIF89 specification are widely available on the Web; search for "GRAPHICS INTERCHANGE FORMAT"\&. The Graphics Interchange Format(c) is the Copyright property of CompuServe Incorporated\&. GIF(sm) is a Service Mark property of CompuServe Incorporated\&. The GIF format was formerly covered by a blocking patent on LZW compression, but it expired in June 2003\&.
+.PP
+The PNG home site at <\m[blue]\fBhttp://www\&.libpng\&.org/pub/png/\fR\m[]> has very complete information on the PNG standard, PNG libraries, and PNG tools\&.
+.SH "SEE ALSO"
+.PP
+web2png(1)
+.SH "AUTHORS"
+.PP
+Code by Alexander Lehmann <alex@hal\&.rhein\-main\&.de>, 1995\&. Auto\-interlace conversion and tRNS optimization by Greg Roelofs <newt@pobox\&.com>, 1999\&. Man page, \-O, \-w, and production packaging by Eric S\&. Raymond <esr@thyrsus\&.com>, 1999\&. \-m option by Steve Ward, 2012\&.

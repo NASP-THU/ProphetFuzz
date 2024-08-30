@@ -1,0 +1,26 @@
+{
+    "name": "makeswf",
+    "description": "makeswf - actionscript compiler makeswf is a command line interface to the Ming library actionscript compiler, with support for embedding prebuilt content. \n frame_content can be either: an ActionScript source file, a bitmap file (png or jpg), or an SWF file.  Non-ActionScript input files are currently only recognized by extension (png, jpg, swf). Files with other extensions will be assumed to contain ActionScript source code. \n Each frame_content will be stored in a separate frame of the output. \n ActionScript code is preprocessed using cpp before being compiled, this allows (among many other things) grouping multiple sourcefiles into a single frame by using #include directives. (See PREPROCESSOR below.) \n Bitmap or SWF content will be stored in a MovieClip named after the corresponding input filename with path and extension removed. This allows easy referencing of the content by ActionScript code.",
+    "options": {
+        "-o --output <output>": "Write SWF file to <output>. Default is ``out.swf''.",
+        "-s --size <width>x<height>": "Set output frame size in pixels (defaults to 640x480).",
+        "-r --frame-rate <frame_rate>": "Set output frame rate (defaults to 12).",
+        "-v --swfversion <swfversion>": "Set output SWF version (defaults to 6).",
+        "-c --compression <compression_level>": "Set output compression level (0 to 9). Defaults to 9.  Use -1 to disable.",
+        "-b --bgcolor <background_color>": "Set background color using hex form (0xRRGGBB).\tIf omitted, no SETBACKGROUNDCOLOR tag will be used.",
+        "-I <dir>": "Add <dir> to the include search path.  The option is passed to the C preprocessor.",
+        "-D <macro>[=<def>]>": "Define <macro>.\tThe option is passed to the C preprocessor.",
+        "-i --import <library.swf>:<sym>[,<sym>]>": "Import named symbols from the given SWF file and store them into a",
+        "-a --init-action <source.as>[:<frameno>]": "Compile the given source AS file as an init action for frame <frameno>.",
+        "-n --network-access network|file": "Force addition of a networkAccess flag with given value.  For SWF8 or higher the FileAttribute tag is mandatory so will be present anyway, with a default of 'file' access. You can use this flag to both change the default for SWF8+ and to provide the optional tag for SWF8-.  The tag basically determine the resources sandbox to use when the movie is loaded from the filesystem, in an exclusive manner.",
+        "-h --help": "Print quick help.",
+        "-V --version": "Print version and copyright info."
+    },
+    "requirements": [
+        
+    ],
+    "combinations": [
+        ["-D <macro>[=<def>]>", "-o --output <output>"],
+        ["-D <macro>[=<def>]>", "-I <dir>"]
+    ]
+}

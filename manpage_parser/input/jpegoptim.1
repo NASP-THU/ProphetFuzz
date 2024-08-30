@@ -1,0 +1,265 @@
+.TH JPEGOPTIM 1 "29 Mar 2022" 
+.UC 4 
+.SH NAME 
+jpegoptim \- utility to optimize/compress JPEG/JFIF files.
+
+
+.SH SYNOPSIS 
+.B jpegoptim
+[ 
+.B options 
+] [ 
+.B filenames 
+] 
+
+.SH DESCRIPTION 
+.I jpegoptim
+is used to optimize/compress jpeg files. Program supports lossless
+optimization, which is based on optimizing the Huffman tables. And
+so called "lossy" optimization where in addition to optimizing Huffman
+tables user can specify upperlimit for image quality.
+
+NOTE! By default jpegoptim modifies the input files (if they are optimized),
+to preserve original files use option \fB\-d\fR to specify alternate directory for saving the optimized files to.
+
+Only normal files are optimized (symbolic links and special files are skipped). 
+Also, any other hard links to the file being optimized (as created using
+.BR link (2))
+are unaffected.
+
+
+.SH OPTIONS
+.PP
+Options may be either the traditional POSIX one letter options, or the
+GNU style long options.  POSIX style options start with a single
+``\-'', while GNU long options start with ``\-\^\-''.
+
+Options offered by
+.I jpegoptim
+are the following:
+.TP 0.6i
+.B -d<path>, --dest=<path>
+Sets alternative destination directory where to save optimized files
+(default is to overwrite the originals). Please note that unchanged files
+won't be added to the destination directory. This means if the source
+file can't be compressed, no file will be created in the destination path.
+.TP 0.6i
+.B -f, --force
+Force optimization, even if the result would be larger than the original
+file.
+.TP 0.6i
+.B -h, --help
+Displays short usage information and exits.
+.TP 0.6i
+.B -m<quality>, --max=<quality>
+Sets the maximum image quality factor (disables lossless optimization
+mode, which is by default enabled). This option will reduce quality
+of those source files that were saved using higher quality setting. 
+While files
+that already have lower quality setting will be compressed using the
+lossless optimization method.
+
+Valid values for quality parameter are: 0 - 100
+.TP 0.6i
+.B -n, --noaction
+Don't really optimize files, just print results.
+.TP 0.6i
+.B -S<size>, --size=<size>
+Try to optimize file to given size (disables lossless
+optimization mode). Target size is specified either in
+kilobytes (1 - n) or as percentage (1% - 99%) of the original file size.
+.TP 0.6i
+.B -T<threshold>, --threshold=<threshold>
+Keep the file unchanged if the compression gain is lower than the threshold (%).
+
+Valid values for threshold are: 0 - 100
+.TP 0.6i
+.B -b, --csv
+Print progress info in CSV format.
+.TP 0.6i
+.B -o, --overwrite
+Overwrite target file even if it exists (when using -d option).
+.TP 0.6i
+.B -p, --preserve
+Preserve file modification times.
+.TP 0.6i
+.B -P, --preserve-perms
+Preserve file permissions (owner/group) by overwriting the original file. This is 
+slightly less safe than the default mode of operation (where new file is first saved
+as temporary file and then renamed over the original file).
+In this mode a backup of the original file is made with .jpegoptim.bak extension,
+and this file is removed after the original file has been successfully replaced.
+NOTE! if running jpegoptim as root there is generally no need to use this option,
+as jpegoptim is able to preserve file permissions when run by root in default mode.
+.TP 0.6i
+.B -q, --quiet
+Quiet mode.
+.TP 0.6i
+.B -t, --totals
+Print totals after processing all files.
+.TP 0.6i
+.B -v, --verbose
+Enables verbose mode (positively chatty).
+
+.TP 0.6i
+.B --all-normal
+Force all output files to be non-progressive. Can be used to convert
+all input files to non-progressive JPEGs when used with --force option.
+.TP 0.6i
+.B --all-progressive
+Force all output files to be progressive. Can be used to convert 
+all normal (non-progressive) JPEGs input files to progressive when used with --force option.
+
+.TP 0.6i
+.B --all-arith
+Force all output files to use Arithmetic Coding.
+This option is experimental and only available if jpegoptim was compiled with
+Arithmetic Coding support enabled.
+.TP 0.6i
+.B --all-huffman
+Force all output files to use (traditional) Huffman coding.
+This option is experimental and only available if jpegoptim was compiled with
+Arithmetic Coding support enabled.
+
+.TP 0.6i
+.B --nofix
+Skip processing of any input files that have any errors/warnings during decompression.
+By default jpegoptim will attempt to optimize any file that it is able to decompress,
+even if decompression generates warnings. This will 'fix' some (corrupt) JPEG images
+automatically.
+If this behaviour is not desired, this option can be used to make jpegoptim to skip
+any input files that contain any errors.
+
+
+.TP 0.6i
+.B --stdout
+Send output image to standard output. Note, if optimization didn't create smaller file
+than the input file, then no output original image is passed through unmodified
+(except any extra data after JPEG image will be discarded).
+
+.TP 0.6i
+.B --stdin
+Read input image from standard input and send output to standard output (--stdout is
+assumend when this option is used).
+When this option is used then only one image is read from standard input.
+Any (other) input files specified on command-line are ignored. 
+Note, if input file '-' is seen on command line then standard input is also assumed.
+
+.SH METADATA OPTIONS
+.PP
+By default jpetoptim will keep common metadata (JPEG markers) and discard any other (unkown ones).
+
+Following markers are kept by default:
+ - EXIF
+ - IPTC
+ - ICC
+ - XMP
+ - COM (JPEG Comment markers)
+
+JFIF marker will be regenerated (by libjpeg) during the process (this cannot be changed).
+However, Adobe marker is also generated (or omitted) by libjpeg based on the image colorspace, etc.
+This behavior depends on libjpeg library version being used. To make sure Adobe marker is preserved
+option --keep-adobe can be used.
+
+To remove additonal markers one or more the --strip-* options can be used.
+.PP
+For example:
+	--strip-icc --strip-xmp --strip-com
+
+
+Alternatively it is possible to specify --strip-all and then one or more of the --keep-* options
+to explicitly list which markers to keep
+.PP
+For example:
+	--strip-all --keep-exif --keep-iptc
+
+.PP
+Options for controlling metadata (markers) in output files:
+
+.TP 0.6i
+.B -s, --strip-all
+Strip all markers from output file. (NOTE! by default
+only Comment & Exif/IPTC/PhotoShop/ICC/XMP markers are kept, everything else is discarded).
+Output JPEG still likely will contains one or two markers (JFIF and Adobe APP14) depending
+on colorspace used in the image, as these markers are generated by the libjpeg encoder 
+automatically.
+.TP 0.6i
+.B --strip-none
+Preserve "all" markers in the image. This will leave all markers untouched in the image,
+except JFIF (APP0) and Adobe (APP14) markers as those get regenerated by the libjpeg library.
+
+NOTE! If this option is specified then any other --strip-* or --keep-* options are ignored.
+
+.TP 0.6i
+.B --strip-com
+Strip Comment (COM) markers from output file.
+.TP 0.6i
+.B --strip-exif
+Strip EXIF markers from output file.
+.TP 0.6i
+.B --strip-iptc
+Strip IPTC / Adobe Photoshop (APP13) markers from output file.
+.TP 0.6i
+.B --strip-icc
+Strip ICC profiles from output file.
+.TP 0.6i
+.B --strip-xmp
+Strip XMP profiles from output file.
+.TP 0.6i
+.B --strip-jfxx
+Strip JFXX (JFIF Extensions) from output file.
+.TP 0.6i
+.B --strip-Adobe
+Strip Adobe markers from output file.
+
+
+.TP 0.6i
+.B --keep-com
+Do not strip any Comment (COM) markers from output file.
+.TP 0.6i
+.B --keep-exif
+Do not strip any EXIF markers from output file.
+.TP 0.6i
+.B --keep-iptc
+Do not strip any IPTC / Adobe Photoshop (APP13) markers from output file.
+.TP 0.6i
+.B --keep-icc
+Do not strip any ICC profiles from output file.
+.TP 0.6i
+.B --keep-xmp
+Do not strip any XMP profiles from output file.
+.TP 0.6i
+.B --strip-jfxx
+Do not strip any JFXX (JFIF Extensions) from output file.
+.TP 0.6i
+.B --keep-Adobe
+Do not strip Adobe markers from output file.
+
+
+
+.SH BUGS
+When using --size option, resulting file is not always exactly the
+requested size. Workaround is to re-run jpegoptim on the same file again
+which often will result file closer to target size.
+
+.SH "SEE ALSO" 
+jpeginfo(1)
+
+.SH AUTHOR
+Timo Kokkonen <tjko@iki.fi>
+
+.SH COPYING
+Copyright (C) 1996-2022  Timo Kokkonen
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+ This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+ You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc.,
+51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.

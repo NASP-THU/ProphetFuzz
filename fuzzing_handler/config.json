@@ -1,0 +1,268 @@
+{
+    "avconv": {
+        "dataset": "power",
+        "package": "libav-git-c464278",
+        "stub": "avconv -i @@ -r 24 /tmp/test.avi"
+    },
+    "bison": {
+        "dataset": "power",
+        "package": "bison-3.7.6",
+        "stub": "bison  @@ -o /tmp/foo"
+    },
+    "c++filt": {
+        "dataset": "configfuzz",
+        "package": "binutils-2.37",
+        "stub": "c++filt @@"
+    },
+    "cflow": {
+        "dataset": "power",
+        "package": "cflow-1.6",
+        "stub": "cflow @@ -o /tmp/foo"
+    },
+    "cjpeg": {
+        "dataset": "power",
+        "package": "libjpeg-turbo-2.1.0",
+        "stub": "cjpeg @@"
+    },
+    "cmark": {
+        "dataset": "carpetfuzz",
+        "package": "cmark-git-9c8e8",
+        "stub": "cmark @@"
+    },
+    "djpeg": {
+        "dataset": "power",
+        "package": "libjpeg-turbo-2.1.0",
+        "stub": "djpeg @@"
+    },
+    "dwarfdump": {
+        "dataset": "power",
+        "package": "libdwarf-20210528",
+        "stub": "dwarfdump @@"
+    },
+    "editcap": {
+        "dataset": "carpetfuzz",
+        "package": "wireshark-4.0.1",
+        "stub": "editcap @@ /tmp/foo"
+    },
+    "eu-elfclassify": {
+        "dataset": "carpetfuzz",
+        "package": "elfutils-0.188",
+        "stub": "eu-elfclassify @@"
+    },
+    "exiv2": {
+        "dataset": "power",
+        "package": "exiv2-0.27.4",
+        "stub": "exiv2 @@"
+    },
+    "ffmpeg": {
+        "dataset": "power",
+        "package": "ffmpeg-N-103440-g2f0113be3f",
+        "stub": "ffmpeg -i @@ -f mp4 -y /tmp/test.avi"
+    },
+    "gif2png": {
+        "dataset": "configfuzz",
+        "package": "gif2png-2.5.8",
+        "stub": "gif2png @@"
+    },
+    "gm": {
+        "dataset": "power",
+        "package": "GraphicsMagick-1.3.36",
+        "stub": "gm identify @@",
+        "timeout": "2000+"
+    },
+    "gs": {
+        "dataset": "power",
+        "package": "ghostpdl-9.54.0",
+        "stub": "gs -sDEVICE=pdfwrite -SOutputFile=/tmp/foo @@"
+    },
+    "img2sixel": {
+        "dataset": "carpetfuzz",
+        "package": "libsixel-git-6a5be",
+        "stub": "img2sixel @@ -o /tmp/foo"
+    },
+    "jasper": {
+        "dataset": "power",
+        "package": "jasper-2.0.32",
+        "stub": "jasper --input @@ --output /tmp/foo.jpg"
+    },
+    "jpegoptim": {
+        "dataset": "carpetfuzz",
+        "package": "jpegoptim-1.5.0",
+        "stub": "jpegoptim @@"
+    },
+    "jpegtran": {
+        "dataset": "carpetfuzz",
+        "package": "libjpeg-turbo-2.1.4",
+        "stub": "jpegtran -outfile /tmp/foo @@"
+    },
+    "jq": {
+        "dataset": "carpetfuzz",
+        "package": "jq-1.6",
+        "stub": "jq . @@"
+    },
+    "lrzip": {
+        "dataset": "carpetfuzz",
+        "package": "lrzip-0.651",
+        "stub": "lrzip -f -p 1 @@ -o /tmp/foo"
+    },
+    "mpg123": {
+        "dataset": "power",
+        "package": "mpg123-1.28.2",
+        "stub": "mpg123 @@",
+        "timeout": "2000+"
+    },
+    "mutool": {
+        "dataset": "power",
+        "package": "mupdf-git-d00de0e",
+        "stub": "mutool draw @@"
+    },
+    "nasm": {
+        "dataset": "power",
+        "package": "nasm-2.15.05",
+        "stub": "nasm @@ -o /tmp/foo"
+    },
+    "nm": {
+        "dataset": "configfuzz",
+        "package": "binutils-2.37",
+        "stub": "nm @@"
+    },
+    "objdump": {
+        "dataset": "power",
+        "package": "binutils-2.36.1",
+        "stub": "objdump -d @@"
+    },
+    "ogg123": {
+        "dataset": "carpetfuzz",
+        "package": "vorbis-tools-1.4.2",
+        "stub": "ogg123 @@ -d wav -f /tmp/foo"
+    },
+    "openssl-asn1parse": {
+        "dataset": "carpetfuzz",
+        "package": "openssl-git-31ff3",
+        "stub": "openssl asn1parse -in @@ -out /tmp/foo"
+    },
+    "openssl-ec": {
+        "dataset": "carpetfuzz",
+        "package": "openssl-git-31ff3",
+        "stub": "openssl ec -in @@ -out /tmp/foo"
+    },
+    "openssl-rsa": {
+        "dataset": "carpetfuzz",
+        "package": "openssl-git-31ff3",
+        "stub": "openssl rsa -in @@ -out /tmp/foo"
+    },
+    "pdftohtml": {
+        "dataset": "power",
+        "package": "poppler-21.07.0",
+        "stub": "pdftohtml @@"
+    },
+    "pdftopng": {
+        "dataset": "power",
+        "package": "xpdf-4.03",
+        "stub": "pdftopng @@ /tmp/foo.png",
+        "timeout": "5000+"
+    },
+    "pdftops": {
+        "dataset": "power",
+        "package": "xpdf-4.03",
+        "stub": "pdftops @@ /tmp/foo.ps"
+    },
+    "pdftotext": {
+        "dataset": "carpetfuzz",
+        "package": "xpdf-4.03",
+        "stub": "pdftotext @@ /tmp/foo"
+    },
+    "pngfix": {
+        "dataset": "power",
+        "package": "libpng-1.6.37",
+        "stub": "pngfix @@ --out=/tmp/foo"
+    },
+    "podofoencrypt": {
+        "dataset": "carpetfuzz",
+        "package": "podofo-0.9.8",
+        "stub": "podofoencrypt -o 123456 @@ /tmp/foo"
+    },
+    "pspp": {
+        "dataset": "power",
+        "package": "pspp-1.4.1",
+        "stub": "pspp -o /tmp/foo -O format=odt @@",
+        "timeout": "2000+"
+    },
+    "readelf": {
+        "dataset": "power",
+        "package": "binutils-2.36.1",
+        "stub": "readelf -a @@"
+    },
+    "size": {
+        "dataset": "power",
+        "package": "binutils-2.36.1",
+        "stub": "size @@"
+    },
+    "speexdec": {
+        "dataset": "carpetfuzz",
+        "package": "speex-Speex-1.2.1",
+        "stub": "speexdec @@ /tmp/foo"
+    },
+    "tcpprep": {
+        "dataset": "carpetfuzz",
+        "package": "tcpreplay-4.4.2",
+        "stub": "tcpprep -a client -i @@ -o /tmp/foo"
+    },
+    "tcpreplay": {
+        "dataset": "carpetfuzz",
+        "package": "tcpreplay-4.4.2",
+        "stub": "tcpreplay -i eth0 @@"
+    },
+    "tiff2pdf": {
+        "dataset": "power",
+        "package": "tiff-4.3.0",
+        "stub": "tiff2pdf @@ -o /tmp/foo"
+    },
+    "tiff2ps": {
+        "dataset": "power",
+        "package": "tiff-4.3.0",
+        "stub": "tiff2ps @@",
+        "shuffle": true
+    },
+    "tiffcp": {
+        "dataset": "carpetfuzz",
+        "package": "libtiff-git-b51bb",
+        "stub": "tiffcp @@ /tmp/foo"
+    },
+    "tiffcrop": {
+        "dataset": "carpetfuzz",
+        "package": "libtiff-git-b51bb",
+        "stub": "tiffcrop @@ /tmp/foo"
+    },
+    "tiffinfo": {
+        "dataset": "power",
+        "package": "tiff-4.3.0",
+        "stub": "tiffinfo @@"
+    },
+    "vim": {
+        "dataset": "power",
+        "package": "vim-8.2.3113",
+        "stub": "vim -u NONE -X -Z -e -s -S @@ -C \":qa!\""
+    },
+    "xmlcatalog": {
+        "dataset": "power",
+        "package": "libxml2-2.9.12",
+        "stub": "xmlcatalog @@",
+        "shuffle": true
+    },
+    "xmllint": {
+        "dataset": "power",
+        "package": "libxml2-2.9.12",
+        "stub": "xmllint @@"
+    },
+    "xmlwf": {
+        "dataset": "power",
+        "package": "expat-2.4.1",
+        "stub": "xmlwf @@"
+    },
+    "yara": {
+        "dataset": "power",
+        "package": "yara-4.1.1",
+        "stub": "yara -p 1 @@ input_yara"
+    }
+}

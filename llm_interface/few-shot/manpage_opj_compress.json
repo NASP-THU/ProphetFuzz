@@ -1,0 +1,50 @@
+{
+    "name": "opj_compress",
+    "description": "opj_compress - This program reads in an image of a certain type and converts it to a jpeg2000 file. It is part of the OpenJPEG library.\nValid input image extensions are .bmp, .pgm, .pgx, .png, .pnm, .ppm, .raw, .tga, .tif . For PNG resp. TIF it needs libpng resp. libtiff.\nValid output image extensions are .j2k, .jp2",
+    "options": {
+        "-b n,n": "(Size of code block (e.g. -b 32,32). Default: 64 x 64)",
+        "-c n": "(Size of precinct (e.g. -c 128,128). Default: 2^15 x 2^15)",
+        "-cinema2K fps": "Digital Cinema 2K profile compliant codestream. Valid fps values are 24 or 48.",
+        "-cinema4K": "Digital Cinema 4K profile compliant codestream. Does not need an fps: default is 24 fps.",
+        "-jpip": "Write jpip codestream index box in JP2 output file. Currently supports only RPCL order.",
+        "-IMF <PROFILE>[,mainlevel=X][,sublevel=Y][,framerate=FPS]": "Interoperable Master Format compliant codestream.\n<PROFILE>=2K, 4K, 8K, 2K_R, 4K_R or 8K_R.\nX >= 0 and X <= 11.\nY >= 0 and Y <= 9.\nframerate > 0 may be specified to enhance checks and set maximum bit rate when Y > 0.",
+        "-TP <R|L|C>": "Divide packets of every tile into tile-parts. Division is made by grouping Resolutions (R), Layers (L) or Components (C).",
+        "-PLT": "Write PLT marker in tile-part header.",
+        "-mct <0|1|2>": "Explicitly specifies if a Multiple Component Transform has to be used. \n0: no MCT ; 1: RGB->YCC conversion ; 2: custom MCT. If custom MCT, '-m' option has to be used (see hereunder). By default, RGB->YCC conversion is used if there are 3 components or more, no conversion otherwise.",
+        "-d X,Y": "(Offset of image origin (e.g. -d 150,300))",
+        "-h": "Print a help message and exit.",
+        "-i name": "(input file name)",
+        "-n n":  "(Number of resolutions. Default: 6)",
+        "-o name": "(output file name)",
+        "-p name": "Progression order. name can be one out of:LRCP, RLCP, RPCL, PCRL, CPRL. Default: LRCP.",
+        "-q n  different psnr for successive layers": "Note: (options -r and -q cannot be used together)",
+        "-r n  different compression ratio(s) for successive layers. The rate specified for each quality level is the desired compression factor.": "Note: (options -r and -q cannot be used together)",
+        "-s X,Y": "sub-sampling factor (e.g. -s 2,2). Default: No sub-sampling in x or y direction. Remark: sub-sampling bigger than 2 can produce errors.",
+        "-t W,H": "(Size of tile (e.g. -t 512,512) )",
+        "-x name": "(Create index file and fill it. Default: no index file)",
+        "-EPH": "(Write EPH marker after each header packet. Default:no EPH)",
+        "-F rawWidth,rawHeight,rawComp,rawBitDepth,s_or_u": "characteristics of the raw input image",
+        "-I": "(Use the irreversible DWT 9-7. Default: Reversible DWT 5-3)",
+        "-ImgDir directory_name": "(directory containing input files)",
+        "-M n": "mode switch with values: 1, 2, 4, 8, 16, 32. Default: No mode switch activated. \nMeaning:\nBYPASS(1)\nRESET(2)\nRESTART(4)\nVSC(8)\nERTERM(16)\nSEGMARK(32)\nValues can be added: RESTART(4) + RESET(2) + SEGMARK(32) = -M 38",
+        "-OutFor ext": "(extension for output files)",
+        "-POC TtileNr=resolutionStart, componentStart, layerEnd, resolutionEnd, componentEnd, progressionOrder": "(see Examples)",
+        "-ROI c=n,U=n": "quantization indices upshifted for component c (0 or 1 or 2) with a value of U (>= 0 and <= 37)\ne.g. -ROI c=0,U=25",
+        "-SOP": "(Write SOP marker before each packet. Default: No SOP marker in the codestream.)",
+        "-T X,Y": "(Offset of the origin of the tiles (e.g. -T 100,75) )"
+    },
+    "requirements": [
+        "'-q' cannot be used with '-r'",
+        "'-cinema2K' cannot be used with '-cinema4K'"
+    ],
+    "combinations": [
+        ["-I", "-cinema4K", "-n n"],
+        ["-r n", "-jpip", "-EPH", "-SOP", "-cinema2K", "-n n"],
+        ["-IMF <PROFILE>[,mainlevel=X][,sublevel=Y][,framerate=FPS]", "-n n"],
+        ["-POC TtileNr=resolutionStart, componentStart, layerEnd, resolutionEnd, componentEnd, progressionOrder", "-IMF <PROFILE>[,mainlevel=X][,sublevel=Y][,framerate=FPS]"],
+        ["-c n", "-TP <R|L|C>", "-d X,Y"],
+        ["-r n", "-c n", "-p name", "-s X,Y", "-TP <R|L|C>", "-d X,Y"],
+        ["-p name", "-POC TtileNr=resolutionStart, componentStart, layerEnd, resolutionEnd, componentEnd, progressionOrder", "-EPH", "-PLT", "-mct <0|1|2>", "-IMF <PROFILE>[,mainlevel=X][,sublevel=Y][,framerate=FPS]"],
+        ["-p name", "-POC TtileNr=resolutionStart, componentStart, layerEnd, resolutionEnd, componentEnd, progressionOrder", "-TP <R|L|C>"]
+    ]
+}

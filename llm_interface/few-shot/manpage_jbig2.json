@@ -1,0 +1,31 @@
+{
+    "name": "jbig2",
+    "description": "JBIG2 Encoder",
+    "options": {
+        "-b <basename>": "output file root name when using symbol coding",
+        "-d --duplicate-line-removal": "use TPGD in generic region coder",
+        "-p --pdf": "produce PDF ready data",
+        "-s --symbol-mode": "use text region, not generic coder",
+        "-t <threshold>: set classification threshold for symbol coder (def": "0.85)",
+        "-T <bw threshold>: set 1 bpp threshold (def": "188)",
+        "-r --refine": "use refinement (requires -s: lossless)",
+        "-O <outfile>": "dump thresholded image as PNG",
+        "-2": "upsample 2x before thresholding",
+        "-4": "upsample 4x before thresholding",
+        "-S": "remove images from mixed input and save separately",
+        "-j --jpeg-output": "write images from mixed input as JPEG",
+        "-a --auto-thresh": "use automatic thresholding in symbol encoder",
+        "--no-hash": "disables use of hash function for automatic thresholding",
+        "-V --version": "version info",
+        "-v": "be verbose"
+    },
+    "requirements": [
+        "'-2' cannot be used with '-4'",
+        "'-r --refine' must be used with '-s --symbol-mode'",
+        "'--no-hash' must be used with '-a --auto-thresh'"
+    ],
+    "combinations": [
+        ["-s --symbol-mode", "-S", "-p --pdf", "-v", "-d --duplicate-line-removal", "-2"],
+        ["-s --symbol-mode", "-a --auto-thresh", "-p --pdf"]
+    ]
+}

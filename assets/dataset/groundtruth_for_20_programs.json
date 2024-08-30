@@ -1,0 +1,793 @@
+{
+    "cjpeg": {
+        "conflict": [
+            [
+                "-grayscale",
+                "-rgb"
+            ],
+            [
+                "-debug",
+                "-verbose"
+            ],
+            [
+                "-dct int",
+                "-dct fast"
+            ],
+            [
+                "-dct int",
+                "-dct float"
+            ],
+            [
+                "-dct fast",
+                "-dct float"
+            ]
+        ],
+        "dependent": {}
+    },
+    "cmark": {
+        "conflict": [
+            [
+                "--hardbreaks",
+                "--width"
+            ],
+            [
+                "--hardbreaks",
+                "--nobreaks"
+            ],
+            [
+                "--nobreaks",
+                "--width"
+            ],
+            [
+                "--safe",
+                "--unsafe"
+            ]
+        ],
+        "dependent": {}
+    },
+    "djpeg": {
+        "conflict": [
+            [
+                "-dct int",
+                "-dct fast"
+            ],
+            [
+                "-dct int",
+                "-dct float"
+            ],
+            [
+                "-dct fast",
+                "-dct float"
+            ],
+            [
+                "-dither fs",
+                "-dither ordered"
+            ],
+            [
+                "-dither fs",
+                "-dither none"
+            ],
+            [
+                "-dither none",
+                "-dither ordered"
+            ],
+            [
+                "-fast",
+                "-dct fast"
+            ],
+            [
+                "-fast",
+                "-nosmooth"
+            ],
+            [
+                "-fast",
+                "-onepass"
+            ],
+            [
+                "-fast",
+                "-dither ordered"
+            ],
+            [
+                "-colors",
+                "-quantize"
+            ],
+            [
+                "-grayscale",
+                "-rgb"
+            ],
+            [
+                "-bmp",
+                "-gif"
+            ],
+            [
+                "-bmp",
+                "-gif0"
+            ],
+            [
+                "-bmp",
+                "-os2"
+            ],
+            [
+                "-bmp",
+                "-pnm"
+            ],
+            [
+                "-bmp",
+                "-targa"
+            ],
+            [
+                "-gif",
+                "-gif0"
+            ],
+            [
+                "-gif",
+                "-os2"
+            ],
+            [
+                "-gif",
+                "-pnm"
+            ],
+            [
+                "-gif",
+                "-targa"
+            ],
+            [
+                "-gif0",
+                "-os2"
+            ],
+            [
+                "-gif0",
+                "-pnm"
+            ],
+            [
+                "-gif0",
+                "-targa"
+            ],
+            [
+                "-os2",
+                "-pnm"
+            ],
+            [
+                "-os2",
+                "-targa"
+            ],
+            [
+                "-pnm",
+                "-targa"
+            ],
+            [
+                "-map",
+                "-colors"
+            ],
+            [
+                "-map",
+                "-onepass"
+            ],
+            [
+                "-debug",
+                "-verbose"
+            ]
+        ],
+        "dependent": {
+            "-dither ordered": "-onepass",
+            "-onepass": "-colors||-quantize",
+            "-crop WxH+X+Y": "-gif||-pnm||-targa",
+            "-dither fs": "-colors||-quantize",
+            "-dither none": "-colors||-quantize"
+        }
+    },
+    "exiv2": {
+        "conflict": [
+            [
+                "-t",
+                "-k"
+            ],
+            [
+                "-T",
+                "-k"
+            ],
+            [
+                "-t",
+                "-T"
+            ],
+            [
+                "-f",
+                "-F"
+            ]
+        ],
+        "dependent": {
+            "-l dir": "-e tgt||-i tgt"
+        }
+    },
+    "gif2png": {
+        "conflict": [
+            [
+                "-i",
+                "-n"
+            ]
+        ],
+        "dependent": {}
+    },
+    "img2sixel": {
+        "conflict": [
+            [
+                "-7",
+                "-8"
+            ],
+            [
+                "-p",
+                "-e"
+            ],
+            [
+                "-I",
+                "-e"
+            ],
+            [
+                "-I",
+                "-p"
+            ]
+        ],
+        "dependent": {
+            "-i": "-e",
+            "-f": "-p",
+            "-s": "-p",
+            "-r": "-h||-w"
+        }
+    },
+    "jpegtran": {
+        "conflict": [
+            [
+                "-rotate 90",
+                "-rotate 180"
+            ],
+            [
+                "-rotate 90",
+                "-rotate 270"
+            ],
+            [
+                "-rotate 180",
+                "-rotate 270"
+            ],
+            [
+                "-copy none",
+                "-copy comments"
+            ],
+            [
+                "-copy none",
+                "-copy icc"
+            ],
+            [
+                "-copy none",
+                "-copy all"
+            ],
+            [
+                "-copy comments",
+                "-copy icc"
+            ],
+            [
+                "-copy comments",
+                "-copy all"
+            ],
+            [
+                "-copy icc",
+                "-copy all"
+            ],
+            [
+                "-copy all",
+                "-icc"
+            ],
+            [
+                "-copy icc",
+                "-icc"
+            ],
+            [
+                "-debug",
+                "-verbose"
+            ],
+            [
+                "-trim",
+                "-perfect"
+            ]
+        ],
+        "dependent": {}
+    },
+    "lrzip": {
+        "conflict": [
+            [
+                "-O",
+                "-o"
+            ],
+            [
+                "-b",
+                "-g"
+            ],
+            [
+                "-b",
+                "-l"
+            ],
+            [
+                "-b",
+                "-n"
+            ],
+            [
+                "-b",
+                "-z"
+            ],
+            [
+                "-g",
+                "-l"
+            ],
+            [
+                "-g",
+                "-n"
+            ],
+            [
+                "-g",
+                "-z"
+            ],
+            [
+                "-l",
+                "-n"
+            ],
+            [
+                "-l",
+                "-z"
+            ],
+            [
+                "-n",
+                "-z"
+            ],
+            [
+                "-b",
+                "-d"
+            ],
+            [
+                "-d",
+                "-g"
+            ],
+            [
+                "-d",
+                "-l"
+            ],
+            [
+                "-d",
+                "-n"
+            ],
+            [
+                "-d",
+                "-z"
+            ]
+        ],
+        "dependent": {
+            "-c": "-d"
+        }
+    },
+    "openssl-ec": {
+        "conflict": [
+            [
+                "-des",
+                "-des3"
+            ],
+            [
+                "-des",
+                "-idea"
+            ],
+            [
+                "-des3",
+                "-idea"
+            ],
+            [
+                "-no_public",
+                "-text"
+            ],
+            [
+                "-no_public",
+                "-pubout"
+            ]
+        ],
+        "dependent": {}
+    },
+    "pdftopng": {
+        "conflict": [
+            [
+                "-mono",
+                "-gray"
+            ],
+            [
+                "-alpha",
+                "-mono"
+            ]
+        ],
+        "dependent": {}
+    },
+    "pdftotext": {
+        "conflict": [
+            [
+                "-layout",
+                "-simple"
+            ],
+            [
+                "-layout",
+                "-simple2"
+            ],
+            [
+                "-layout",
+                "-table"
+            ],
+            [
+                "-layout",
+                "-lineprinter"
+            ],
+            [
+                "-layout",
+                "-raw"
+            ],
+            [
+                "-simple",
+                "-simple2"
+            ],
+            [
+                "-simple",
+                "-table"
+            ],
+            [
+                "-simple",
+                "-lineprinter"
+            ],
+            [
+                "-simple",
+                "-raw"
+            ],
+            [
+                "-simple2",
+                "-table"
+            ],
+            [
+                "-simple2",
+                "-lineprinter"
+            ],
+            [
+                "-simple2",
+                "-raw"
+            ],
+            [
+                "-table",
+                "-lineprinter"
+            ],
+            [
+                "-table",
+                "-raw"
+            ],
+            [
+                "-lineprinter",
+                "-raw"
+            ]
+        ],
+        "dependent": {
+            "-fixed": "-layout||-table||-lineprinter",
+            "-linespacing": "-lineprinter"
+        }
+    },
+    "podofoencrypt": {
+        "conflict": [
+            [
+                "--aes",
+                "--rc4v1"
+            ],
+            [
+                "--aes",
+                "--rc4v2"
+            ],
+            [
+                "--rc4v1",
+                "--rc4v2"
+            ]
+        ],
+        "dependent": {}
+    },
+    "pspp": {
+        "conflict": [
+            [
+                "-o",
+                "--no-output"
+            ],
+            [
+                "-O format=FORMAT",
+                "--no-output"
+            ],
+            [
+                "-O OPTION=VALUE",
+                "--no-output"
+            ],
+            [
+                "-O device={terminal|listing}",
+                "--no-output"
+            ],
+            [
+                "-I",
+                "-I-"
+            ],
+            [
+                "-b",
+                "-i"
+            ]
+        ],
+        "dependent": {
+            "-O format=FORMAT": "-o",
+            "-O OPTION=VALUE": "-o",
+            "-O device={terminal|listing}": "-o"
+        }
+    },
+    "size": {
+        "conflict": [
+            [
+                "-A",
+                "-B"
+            ],
+            [
+                "-A",
+                "-G"
+            ],
+            [
+                "-A",
+                "--format"
+            ],
+            [
+                "-B",
+                "-G"
+            ],
+            [
+                "-B",
+                "--format"
+            ],
+            [
+                "-G",
+                "--format"
+            ],
+            [
+                "-d",
+                "-o"
+            ],
+            [
+                "-d",
+                "-x"
+            ],
+            [
+                "-d",
+                "--radix=number"
+            ],
+            [
+                "-o",
+                "-x"
+            ],
+            [
+                "-o",
+                "--radix=number"
+            ],
+            [
+                "-x",
+                "--radix=number"
+            ]
+        ],
+        "dependent": {
+            "-t": "-B||-G"
+        }
+    },
+    "speexdec": {
+        "conflict": [
+            [
+                "--enh",
+                "--no-enh"
+            ],
+            [
+                "--force-nb",
+                "--force-wb"
+            ],
+            [
+                "--force-nb",
+                "--force-uwb"
+            ],
+            [
+                "--force-wb",
+                "--force-uwb"
+            ],
+            [
+                "--mono",
+                "--stereo"
+            ],
+            [
+                "--pf",
+                "--enh"
+            ],
+            [
+                "--pf",
+                "--no-pf"
+            ],
+            [
+                "--pf",
+                "--no-enh"
+            ],
+            [
+                "--no-pf",
+                "--no-enh"
+            ],
+            [
+                "--no-pf",
+                "--enh"
+            ],
+            [
+                "--rate",
+                "--force-nb"
+            ],
+            [
+                "--rate",
+                "--force-wb"
+            ],
+            [
+                "--rate",
+                "--force-uwb"
+            ]
+        ],
+        "dependent": {}
+    },
+    "tcpprep": {
+        "conflict": [
+            [
+                "-a",
+                "--cidr"
+            ],
+            [
+                "-a",
+                "--port"
+            ],
+            [
+                "-a",
+                "--regex"
+            ],
+            [
+                "-a",
+                "--mac"
+            ],
+            [
+                "-c",
+                "--port"
+            ],
+            [
+                "-c",
+                "--regex"
+            ],
+            [
+                "-c",
+                "--mac"
+            ],
+            [
+                "-r",
+                "--port"
+            ],
+            [
+                "-r",
+                "--mac"
+            ],
+            [
+                "-p",
+                "--mac"
+            ],
+            [
+                "-x",
+                "-X"
+            ],
+            [
+                "--no-arg-comment",
+                "--comment=string"
+            ],
+            [
+                "--load-opts=cfgfile",
+                "--no-load-opts"
+            ]
+        ],
+        "dependent": {
+            "-s": "--port",
+            "-R": "--auto",
+            "-m": "--auto",
+            "-M": "--auto",
+            "-A": "--verbose"
+        }
+    },
+    "tiff2ps": {
+        "conflict": [
+            [
+                "-1",
+                "-2"
+            ],
+            [
+                "-1",
+                "-3"
+            ],
+            [
+                "-2",
+                "-3"
+            ],
+            [
+                "-e",
+                "-z"
+            ],
+            [
+                "-e",
+                "-p"
+            ],
+            [
+                "-o",
+                "-d"
+            ],
+            [
+                "-a",
+                "-s"
+            ],
+            [
+                "-x",
+                "-y"
+            ]
+        ],
+        "dependent": {
+            "-8": "-2||-3",
+            "-c": "-w&&-h",
+            "-L": "-H&&-W",
+            "-z": "-2"
+        }
+    },
+    "tiffinfo": {
+        "conflict": [
+            [
+                "-o",
+                "-#"
+            ]
+        ],
+        "dependent": {}
+    },
+    "xmlwf": {
+        "conflict": [
+            [
+                "-c",
+                "-n"
+            ],
+            [
+                "-p",
+                "-x"
+            ],
+            [
+                "-t",
+                "-d"
+            ],
+            [
+                "-t",
+                "-m"
+            ],
+            [
+                "-t",
+                "-c"
+            ],
+            [
+                "-t",
+                "-N"
+            ],
+            [
+                "-N",
+                "-c"
+            ]
+        ],
+        "dependent": {
+            "-c": "-d",
+            "-m": "-d",
+            "-N": "-d"
+        }
+    },
+    "yara": {
+        "conflict": [
+            [
+                "--fail-on-warnings",
+                "--no-warnings"
+            ]
+        ],
+        "dependent": {}
+    }
+}

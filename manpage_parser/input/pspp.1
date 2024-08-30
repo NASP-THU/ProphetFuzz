@@ -1,0 +1,70 @@
+.\" PSPP - computes sample statistics.
+.\" Copyright (C) 1997, 1998 Free Software Foundation, Inc.
+.\"
+.\" This program is free software: you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation, either version 3 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License
+.\" along with this program.  If not, see <http://www.gnu.org/licenses/>.
+.\"
+.TH pspp 1 "29 Sep 2014" "GNU" "PSPP manual"
+.SH NAME
+pspp \- a system for statistical analysis
+.SH SYNOPSIS
+.B pspp
+.RI [ options ] " file"...
+.SH DESCRIPTION
+\fBpspp\fP performs statistical analysis on
+sampled data. Detailed documentation is available in html, pdf and info format.
+If the info system is installed, you can view the documentation with
+.IP
+.B info pspp
+.PP
+On Debian GNU/Linux systems, full documentation is available in
+\fB/usr/share/doc/pspp\fP in HTML and PDF formats and in
+\fB/usr/share/info\fP in info format. Documentation is
+also available at \fBhttp://www.gnu.org/software/pspp\fP.
+.SH OPTIONS
+.TP
+.B \-\-help
+Show summary of options.
+.TP
+.B \-\-version
+Show version of program.
+.SH EXAMPLE
+Create a file \fBexample.sps\fP with the following content:
+.PP
+.nf
+.RS
+* Example sps file
+data list / v0 to v2 1-9.
+begin data.
+ 12 12 89
+ 56 12 77
+ 78 12 73
+ 90 91
+ 37 97 85
+end data.
+
+descript all
+  /stat=all
+  /format=serial.
+.RE
+.fi
+.PP
+and run pspp with
+.IP
+.B pspp example.sps
+.PP
+More examples files are in \fB/usr/share/pspp/examples\fP
+.SH SEE ALSO
+.BR psppire (1), pspp\-dump\-sav (1), pspp\-convert (1).
+.SH AUTHOR
+pspp was written by Ben Pfaff, John Darrington and others
