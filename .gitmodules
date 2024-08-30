@@ -1,0 +1,3 @@
+[submodule "fuzzer"]
+	path = fuzzer
+	url = https://github.com/waugustus/CarpetFuzz-fuzzer
