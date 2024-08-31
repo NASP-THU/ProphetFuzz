@@ -84,7 +84,25 @@ The implementations for various components of ProphetFuzz can be found in the fo
 
 ## Usage Example
 
-1. **Set Up Your API Key**:
+Here's the English translation:
+
+1. **Using Docker to Configure the Running Environment**
+
+   - If you only want to complete the part that interacts with the LLM, you can directly use our pre-installed image (4GB):
+
+   ```
+   docker run -it 4ugustus/prophetfuzz_base bash
+   ```
+
+   - If you want to complete the entire process, including seed generation, command repair, and fuzzing, please build the full image based on the pre-installed image:
+
+   ```
+   docker build -t prophetfuzz:latest .
+   docker run -it --privileged=true prophetfuzz bash
+   # 'privileged' is used for setting up the fuzzing environment
+   ```
+
+2. **Set Up Your API Key**:
    Set your OpenAI API key in the `llm_interface/config/.env` file:
    ```bash
    OPENAI_API_KEY="[Input Your API Key Here]"
