@@ -80,7 +80,11 @@ RUN DEBIAN_FRONTEND=noninteractive apt install -y \
 	texinfo \
 	zlib1g-dev \
     libx264-dev \
-    xmlto
+    xmlto \
+	libasan6 \
+	man-db \
+	manpages
+RUN test -f /usr/bin/man.REAL && cp /usr/bin/man.REAL /usr/bin/man || true
 RUN pip3 install wllvm sysv-ipc
 RUN mkdir /root/dep
 WORKDIR /root/dep
@@ -96,8 +100,17 @@ RUN go env -w GO111MODULE=off; go get github.com/SRI-CSL/gllvm/cmd/...
 
 # Prepare build script
 RUN /bin/echo -e '#!/bin/bash\nCFLAGS="-g -O0" CXXFLAGS="-g -O0" ./configure --prefix=$PWD/build_orig --disable-shared "$@"; make -j; make install; make clean' > /usr/bin/orig_configure && chmod +x /usr/bin/orig_configure; \
-    /bin/echo -e '#!/bin/bash\nCFLAGS="-g -fsanitize=address -fno-omit-frame-pointer" CXXFLAGS="-g -fsanitize=address -fno-omit-frame-pointer" ./configure --prefix=$PWD/build_asan --disable-shared "$@"; make -j; make install; make clean' > /usr/bin/asan_configure && chmod +x /usr/bin/asan_configure; \
-    /bin/echo -e '#!/bin/bash\nCC=/root/fuzzer/afl++/afl-clang-fast CXX=/root/fuzzer/afl++/afl-clang-fast++ ./configure --prefix=$PWD/build_afl++/ --disable-shared "$@"; make -j; make install; make clean' > /usr/bin/afl++_configure && chmod +x /usr/bin/afl++_configure; \
+RUN /bin/echo -e '#!/bin/bash\n\
+    export ASAN_OPTIONS="detect_leaks=0:abort_on_error=0:exitcode=0" \n\
+    export ac_cv_header_stdc=yes \n\
+    export ac_cv_func_malloc_0_nonnull=yes \n\
+    export ac_cv_func_realloc_0_nonnull=yes \n\
+    export ac_cv_c_bigendian=no \n\
+    CFLAGS="-g -fsanitize=address -fno-omit-frame-pointer" \n\
+    CXXFLAGS="-g -fsanitize=address -fno-omit-frame-pointer" \n\
+    ./configure --prefix=$PWD/build_asan --disable-shared "$@"; \n\
+    make -j$(nproc); make install; make distclean' > /usr/bin/asan_configure && chmod +x /usr/bin/asan_configure \
+	/bin/echo -e '#!/bin/bash\nCC=/root/fuzzer/afl++/afl-clang-fast CXX=/root/fuzzer/afl++/afl-clang-fast++ ./configure --prefix=$PWD/build_afl++/ --disable-shared "$@"; make -j; make install; make clean' > /usr/bin/afl++_configure && chmod +x /usr/bin/afl++_configure; \
     /bin/echo -e '#!/bin/bash\nCC=/root/ProphetFuzz/fuzzer/afl-clang-fast CXX=/root/ProphetFuzz/fuzzer/afl-clang-fast++ ./configure --prefix=$PWD/build_prophetfuzz/ --disable-shared "$@"; make -j; make install; make clean' > /usr/bin/prophetfuzz_configure && chmod +x /usr/bin/prophetfuzz_configure; \
     /bin/echo -e '#!/bin/bash\norig_configure "$@"; asan_configure "$@"; afl++_configure "$@"; prophetfuzz_configure "$@"' > /usr/bin/all_configure && chmod +x /usr/bin/all_configure; \
     /bin/echo -e '#!/bin/bash\nCC=gclang CXX=gclang++ ./configure --prefix=$PWD/build_orig --disable-shared "$@"; make -j; make install' > /usr/bin/gclang_configure && chmod +x /usr/bin/gclang_configure
