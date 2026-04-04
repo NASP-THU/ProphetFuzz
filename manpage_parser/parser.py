@@ -7,6 +7,7 @@ from utils.groff_utils import GroffUtil
 
 current_path = sys.path[0]
 output_path = os.path.join(current_path, "output")
+os.makedirs(output_path, exist_ok=True)
 
 groff_util = GroffUtil()
 
